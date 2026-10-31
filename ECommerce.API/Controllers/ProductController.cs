@@ -1,4 +1,5 @@
 ﻿
+using Ecommerce.API.Controllers.BaseController;
 using ECommerce.Application.Common;
 using ECommerce.Application.Contracts;
 using ECommerce.Application.DTOS.Products;
@@ -17,17 +18,6 @@ namespace Ecommerce.API.Controllers
             _productService = productService;
         }
 
-        //GetAll Products
-        [HttpGet]//Before Endpoint Check Cache (by cache key ) if found -> return resonse
-                 //not found -> enter endpoint -> cache -> return
-        [RedisCache(90)]
-        [Authorize]
-        public async Task<ActionResult<PaginatedResult<ProductDto>>> GetAllProducts([FromQuery] ProductQueryParameter parameters, CancellationToken ct)
-        {
-
-            var res = await _productService.GetAllProductsAsync(parameters, ct);
-            return ToActionResult(res);
-        }
 
         //Get Product by id
         [HttpGet("{id}")]
@@ -53,3 +43,25 @@ namespace Ecommerce.API.Controllers
         }
     }
 }
+
+
+//{
+//    "Id": 1,
+//            "Name": "Classic White T-Shirt",
+//            "Description": "A soft cotton white t-shirt that goes with everything. Perfect for casual everyday wear.",
+//            "PictureUrl": "http://localhost:5213/Files/images/products/ClassicWhiteTShirt.jpeg",
+//            "Price": 120.00,
+//            "ProductBrand": "H&M",
+//            "ProductType": "Tops"
+//        },
+
+
+//     {
+//    "id": 8,
+//            "name": "Casual Sneakers",
+//            "description": "Lightweight sneakers designed for everyday wear. Breathable material with cushioned soles.",
+//            "pictureUrl": "http://localhost:5213/Files/images/products/CasualSneakers.jpg",
+//            "price": 600.00,
+//            "productBrand": "Nike",
+//            "productType": "Accessories & Footwear"
+//        },
