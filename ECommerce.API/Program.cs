@@ -1,8 +1,10 @@
+
 using ECommerce.API.Extensions;
 using ECommerce.Application;
 using ECommerce.Application.Common;
 using ECommerce.Application.MappingProfiles;
 using ECommerce.Infrastructure;
+
 using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +17,6 @@ builder.Services.AddApplicationServices();
 builder.Services.Configure<UrlSettings>(builder.Configuration.GetSection("UrlSettings"));
 
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
