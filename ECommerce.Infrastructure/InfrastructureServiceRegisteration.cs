@@ -1,9 +1,11 @@
-﻿using ECommerce.Domain.Contracts;
+﻿using ECommerce.Application.Contracts;
+using ECommerce.Domain.Contracts;
 using ECommerce.Infrastructure.Data;
 using ECommerce.Infrastructure.DataSeeding;
 using ECommerce.Infrastructure.Identity.Data;
 using ECommerce.Infrastructure.Identity.Entities;
 using ECommerce.Infrastructure.Repositories;
+using ECommerce.Infrastructure.Service;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -47,6 +49,7 @@ namespace ECommerce.Infrastructure
             services.AddIdentityCore<ApplicationUser>().AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<StoreIdentityDbContext>();
 
+            services.AddScoped<IIdentityService, IdentityService>();
             return services;
         }
     }
