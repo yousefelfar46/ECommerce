@@ -5,6 +5,7 @@ using ECommerce.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -28,7 +29,12 @@ namespace ECommerce.Infrastructure
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+            services.AddSingleton<IConnectionMultiplexer>(config =>
+            {
+                return ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisConnection")!);
+            });
 
+            services.AddScoped<IBasketRepository, BasketRepository>();
             return services;
         }
     }
