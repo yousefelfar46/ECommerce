@@ -2,7 +2,9 @@
 using ECommerce.Infrastructure.Data;
 using ECommerce.Infrastructure.DataSeeding;
 using ECommerce.Infrastructure.Identity.Data;
+using ECommerce.Infrastructure.Identity.Entities;
 using ECommerce.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,7 +32,7 @@ namespace ECommerce.Infrastructure
                 options.UseSqlServer(configuration.GetConnectionString("IdentityConnection"));
             });
             services.AddKeyedScoped<IDataSeeder, CatalogDataSeeder>("Catalog");
-            //  services.AddKeyedScoped<IDataSeeder, IdentityDataSeeder>("Identity");
+             services.AddKeyedScoped<IDataSeeder, IdentityDataSeeder>("Identity");
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -38,8 +40,13 @@ namespace ECommerce.Infrastructure
             {
                 return ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisConnection")!);
             });
-
             services.AddScoped<IBasketRepository, BasketRepository>();
+            services.AddSingleton<ICacheRepositoy, CacheRepository>();
+
+
+            services.AddIdentityCore<ApplicationUser>().AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<StoreIdentityDbContext>();
+
             return services;
         }
     }

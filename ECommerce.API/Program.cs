@@ -1,5 +1,5 @@
 
-using ECommerce.API.Extensions;
+using Ecommerce.API.Extensions;
 using ECommerce.Application;
 using ECommerce.Application.Common;
 using ECommerce.Application.MappingProfiles;
