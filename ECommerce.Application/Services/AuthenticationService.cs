@@ -7,7 +7,7 @@ namespace ECommerce.Application.Services
     internal class AuthenticationService : IAuthenticationService
     {
         private readonly IIdentityService _identityService;
-      
+   
 
         public async Task<Result<bool>> CheckEmailExsistsAsync(string email, CancellationToken ct = default)
         {
@@ -70,7 +70,7 @@ namespace ECommerce.Application.Services
 
         }
 
-    
+      
 
 
 
