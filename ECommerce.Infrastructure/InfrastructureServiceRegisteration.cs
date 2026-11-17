@@ -10,9 +10,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using StackExchange.Redis;
-using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace ECommerce.Infrastructure
@@ -29,12 +28,15 @@ namespace ECommerce.Infrastructure
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
+
             services.AddDbContext<StoreIdentityDbContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("IdentityConnection"));
             });
-            services.AddKeyedScoped<IDataSeeder, CatalogDataSeeder>("Catalog");
-             services.AddKeyedScoped<IDataSeeder, IdentityDataSeeder>("Identity");
+
+            services.AddKeyedScoped<IDataSeeder, CatalogDataSeederr>("Catalog");
+            services.AddKeyedScoped<IDataSeeder, IdentityDataSeeder>("Identity");
+
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -42,6 +44,7 @@ namespace ECommerce.Infrastructure
             {
                 return ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisConnection")!);
             });
+
             services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddSingleton<ICacheRepositoy, CacheRepository>();
 
@@ -50,6 +53,10 @@ namespace ECommerce.Infrastructure
                 .AddEntityFrameworkStores<StoreIdentityDbContext>();
 
             services.AddScoped<IIdentityService, IdentityService>();
+
+
+
+
             return services;
         }
     }
