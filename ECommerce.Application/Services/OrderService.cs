@@ -13,7 +13,7 @@ namespace ECommerce.Application.Services
     internal class OrderService : IOrderService
     {
         private readonly IUnitOfWork _uow;
-        private readonly IBasketRepository _basketRepository;
+        private readonly IBasketRepository _basketRepository;   
         private readonly IMapper _mapper;
 
         public OrderService(IUnitOfWork uow, IBasketRepository basketRepository, IMapper mapper)
